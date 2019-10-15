@@ -16,4 +16,9 @@ class Task extends Model
     public $incrementing = true;
 
     protected $fillable = ['user_id', 'title', 'due_date', 'status'];
+
+    public function task_details()
+    {
+        return $this->hasMany(Task_detail::class, 'task_id', 'task_id');
+    }
 }
