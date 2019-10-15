@@ -14,6 +14,7 @@
 //     dump($event->sql);
 //     // dump($event->bindings);
 // });
+
 Route::get('/', function () {
     return view('welcome');
 });

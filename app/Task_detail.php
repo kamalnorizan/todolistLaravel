@@ -16,4 +16,9 @@ class Task_detail extends Model
     public $incrementing = true;
 
     protected $fillable = ['task_id','title','status'];
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class, 'task_id', 'task_id');
+    }
 }

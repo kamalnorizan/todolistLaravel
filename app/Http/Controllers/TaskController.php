@@ -15,9 +15,10 @@ class TaskController extends Controller
     public function index()
     {
         // $tasks = Task::all();
-        $tasks = Task::limit(20)->get();
+        $tasks = Task::with('task_details')->whereIn('task_id', [1,30])->get();
         // dd($tasks);
-        return view('home',compact('tasks'));
+        // return view('home',compact('tasks'));
+        return response()->json($tasks);
     }
 
     /**
@@ -50,6 +51,8 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         //
+        // dd($task);
+        return response()->json($task->task_details->first()->task->title);
     }
 
     /**
