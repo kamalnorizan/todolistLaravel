@@ -22,4 +22,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('/task', 'TaskController');
+
+Route::get('/task/{id}/delete','TaskController@destroy');
+Route::resource('/task', 'TaskController', [
+    'except' => ['destroy']
+]);

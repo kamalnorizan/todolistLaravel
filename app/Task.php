@@ -21,4 +21,9 @@ class Task extends Model
     {
         return $this->hasMany(Task_detail::class, 'task_id', 'task_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id', 'id');
+    }
 }

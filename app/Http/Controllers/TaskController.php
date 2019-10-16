@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +21,12 @@ class TaskController extends Controller
     public function index()
     {
         // $tasks = Task::all();
-        $tasks = Task::with('task_details')->whereIn('task_id', [1,30])->get();
+        $tasks = Task::with('user.tasks','task_details')->limit(10)->find(2);
+
         // dd($tasks);
         // return view('home',compact('tasks'));
+
+        // $user = User::with('tasks.task_details.task')->find(2);
         return response()->json($tasks);
     }
 
@@ -29,6 +38,7 @@ class TaskController extends Controller
     public function create()
     {
         //
+        return view('tasks.create');
     }
 
     /**
@@ -40,6 +50,17 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         //
+        // $task = new Task();
+        // $task->user_id = Auth::id();
+        // $task->title = $request->title;
+        // $task->due_date = $request->due_date;
+        // $task->save();
+
+        $input = $request->all();
+        $input['user_id'] = Auth::id();
+        Task::create($input);
+        return redirect('/task/create');
+        // dd($request);
     }
 
     /**
@@ -61,9 +82,10 @@ class TaskController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
+    // php artisan make:controller TaskController --model=Task
     public function edit(Task $task)
     {
-        //
+        return view('tasks.edit',compact('task'));
     }
 
     /**
@@ -76,6 +98,8 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         //
+        $task->fill($request->all())->save();
+        return redirect('/task/'.$task->task_id.'/edit');
     }
 
     /**
@@ -84,8 +108,10 @@ class TaskController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
         //
+        Task::find($id)->delete();
+        return redirect('/task');
     }
 }
