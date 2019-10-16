@@ -13,10 +13,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    @foreach ($tasks as $key=>$task)
-                        {{$key+1}}. {{$task->title}}  || @if(!$task->task_details->isempty()){{$task->task_details->first()->task_detail_id}} @endif<br>
-                    @endforeach
                 </div>
             </div>
         </div>

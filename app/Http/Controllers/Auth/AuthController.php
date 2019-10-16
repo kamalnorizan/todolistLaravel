@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use Carbon\Carbon;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -56,4 +57,6 @@ class AuthController extends Controller
             )->toDateTimeString()
         ], 200);
     }
+
+
 }

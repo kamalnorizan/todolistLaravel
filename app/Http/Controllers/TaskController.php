@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -113,5 +113,11 @@ class TaskController extends Controller
         //
         Task::find($id)->delete();
         return redirect('/task');
+    }
+
+    public function getAllTask()
+    {
+        $tasks = Task::all();
+        return response()->json($tasks, 200);
     }
 }

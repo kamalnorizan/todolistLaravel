@@ -18,6 +18,9 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-
-Route::post('/auth/register', 'Auth\AuthController@register');
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('register', 'Auth\AuthController@register');
+    Route::post('login', 'Auth\AuthController@login');
+});
+Route::get('task', 'TaskController@getAllTask')->middleware('auth:api');
 

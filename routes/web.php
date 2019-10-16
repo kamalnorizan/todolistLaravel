@@ -23,7 +23,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/task/{id}/delete','TaskController@destroy');
+Route::get('/task/{id}/delete','TaskController@destroy')->middleware('auth');
 Route::resource('/task', 'TaskController', [
     'except' => ['destroy']
-]);
+])->middleware('auth');
